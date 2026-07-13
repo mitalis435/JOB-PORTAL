@@ -49,7 +49,7 @@ const Description = () => {
         }
       } else {
         // APPLY LOGIC
-        const res = await axios.post(`${APPLICATION_API_ENDPOINT}/apply/${jobId}`, {}, { withCredentials: true });
+        const res = await axios.post(`${APPLICATION_API_ENDPOINT}/apply/${jobId}`, null, { withCredentials: true , headers: {'Content-Type':'application/json'}});
         if (res.data.success) {
           setIsApplied(true);
           const updateSingleJob = {
