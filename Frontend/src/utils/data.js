@@ -1,4 +1,4 @@
-const BASE_URL="https://job-portal-wihn.onrender.com/api/v1";
+const BASE_URL="https://job-portal-wihn.onrender.com/api";
 
 export const USER_API_ENDPOINT=`${BASE_URL}/user`;
 export const JOB_API_ENDPOINT=`${BASE_URL}/job`;
