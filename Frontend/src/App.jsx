@@ -2,8 +2,6 @@ import React from "react";
 import Navbar from "./components/components_lite/Navbar";
 import Login from "./components/authentication/Login";
 import Register from "./components/authentication/Register";
-//import VerifyOtp from "./components/authentication/VerifyOtp";
-//import ResetPassword from "./components/authentication/ResetPassword";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./components/components_lite/Home";
 import PrivacyPolicy from "./components/components_lite/PrivacyPolicy.jsx";
@@ -32,14 +30,6 @@ const appRouter = createBrowserRouter([
     path: "/register",
     element: <Register />,
   },
-  // {
-  //   path: "/verify-otp",
-  //   element: <VerifyOtp />,
-  // },
-  // {
-  //   path: "/forgot-password",
-  //   element: <ResetPassword />,
-  // },
   {
     path: "/description/:id",
     element: <Description />,
@@ -77,7 +67,7 @@ const appRouter = createBrowserRouter([
     element: <TermsAndConditions />,
   },
 
-  // /admin
+  // admin
   {
     path: "/admin/companies",
     element: (
