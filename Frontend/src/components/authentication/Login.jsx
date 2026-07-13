@@ -28,6 +28,7 @@ const Login = () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+    console.log("Sending data to API:", input);
     try {
       dispatch(setLoading(true));
       const res = await axios.post(`${USER_API_ENDPOINT}/login`, input, {
