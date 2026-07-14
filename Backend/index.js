@@ -31,7 +31,7 @@ app.use(cookieParser());
 // app.use("/api/job", jobRoute);
 // app.use("/api/application", applicationRoute);
 const corsOptions = {
-  origin: ["http://localhost:5173", "https://job-portal-bay-two-88.vercel.app"],
+  origin: ["http://localhost:5173", "https://job-portal-bay-two-88.vercel.app", "https://job-portal-7lnijfcq7-mitalis423-4195s-projects.vercel.app"],
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
