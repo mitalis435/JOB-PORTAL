@@ -1,26 +1,18 @@
 import jwt from "jsonwebtoken";
-
 const authenticateToken = (req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', req.headers.origin || 'https://job-portal-7nijfcq7-mitalis423-4195s-projects.vercel.app');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+
   try {
     const token = req.cookies.token;
     if (!token) {
-      return res
-        .status(401)
-        .json({ message: "No token provided", success: false });
+      return res.status(401).json({ message: "No token provided", success: false });
     }
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    if (!decoded) {
-      return res.status(401).json({
-        message: "Invalid token",
-        success: false
-      });
-    }
     req.id = decoded.userId;
     next();
   } catch (error) {
-    return res.status(401).json({
-       message: "Invalid token"
-      });
+    return res.status(401).json({ message: "Invalid token", success: false });
   }
 };
 

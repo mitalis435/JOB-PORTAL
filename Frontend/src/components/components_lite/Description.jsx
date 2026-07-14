@@ -52,9 +52,10 @@ const Description = () => {
         const res = await axios.post(`${APPLICATION_API_ENDPOINT}/apply/${jobId}`, null, { withCredentials: true , headers: {'Content-Type':'application/json'}});
         if (res.data.success) {
           setIsApplied(true);
+          const currentApplications = singleJob?.applications || [];
           const updateSingleJob = {
             ...singleJob,
-            applications: [...singleJob.applications, { applicant: user?._id }],
+            applications: [...currentApplications, { applicant: user?._id }],
           };
           dispatch(setSingleJob(updateSingleJob));
           toast.success(res.data.message);
@@ -70,7 +71,7 @@ const Description = () => {
       setLoading(true);
       setError(null);
       try {
-        const res = await axios.get(`${JOB_API_ENDPOINT}/get/${jobId}`, {}, {
+        const res = await axios.get(`${JOB_API_ENDPOINT}/get/${jobId}`, {
           withCredentials: true,
         });
         console.log("API Response:", res.data);

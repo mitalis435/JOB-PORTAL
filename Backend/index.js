@@ -15,25 +15,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// const corsOptions = {
-//   origin: ["http://localhost:5173","https://job-portal-bay-two-88.vercel.app"],
-//   credentials: true,
-// };
-
-// app.use(cors(corsOptions));
-
-// const PORT = process.env.PORT || 5001;
- 
-// //api's
-
-// app.use("/api/user", userRoute);
-// app.use("/api/company", companyRoute);
-// app.use("/api/job", jobRoute);
-// app.use("/api/application", applicationRoute);
-
 const corsOptions = {
   origin: function (origin, callback) {
-  
     if (!origin || origin.includes("localhost") || origin.endsWith(".vercel.app")) {
       callback(null, true);
     } else {
@@ -42,7 +25,7 @@ const corsOptions = {
   },
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
+  allowedHeaders: ["Content-Type", "Authorization", "Cookie", "Origin", "Accept", "X-Requested-With"],
 };
 
 app.use(cors(corsOptions));
