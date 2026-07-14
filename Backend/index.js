@@ -11,34 +11,33 @@ import applicationRoute from "./routes/application.route.js";
 dotenv.config({});
 const app = express();
 
-//middleware
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser());
-
 app.use((req, res, next) => {
   const allowedOrigins = [
-    "http://localhost:5173", 
+    "http://localhost:5173",
     "https://job-portal-bay-two-88.vercel.app"
   ];
   const origin = req.headers.origin;
-  
+
   if (allowedOrigins.includes(origin)) {
     res.setHeader("Access-Control-Allow-Origin", origin);
   }
-  
+
   res.setHeader("Access-Control-Allow-Credentials", "true");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization, Cookie");
 
   if (req.method === "OPTIONS") {
-    return res.sendStatus(200); 
+    return res.sendStatus(200);
   }
   next();
 });
+//middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 
 const PORT = process.env.PORT || 5001;
- 
+
 app.use("/api/user", userRoute);
 app.use("/api/company", companyRoute);
 app.use("/api/job", jobRoute);
