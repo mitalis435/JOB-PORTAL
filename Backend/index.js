@@ -30,16 +30,23 @@ app.use(cookieParser());
 // app.use("/api/company", companyRoute);
 // app.use("/api/job", jobRoute);
 // app.use("/api/application", applicationRoute);
+
 const corsOptions = {
-  origin: ["http://localhost:5173", "https://job-portal-bay-two-88.vercel.app", "https://job-portal-7lnijfcq7-mitalis423-4195s-projects.vercel.app"],
+  origin: function (origin, callback) {
+  
+    if (!origin || origin.includes("localhost") || origin.endsWith(".vercel.app")) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization", "Cookie"],
 };
 
 app.use(cors(corsOptions));
-
-app.options('*', cors(corsOptions)); 
+app.options('*', cors(corsOptions));
 
 const PORT = process.env.PORT || 5001;
  
