@@ -5,12 +5,12 @@ export const applyJob = async (req, res) => {
   try {
     const userId = req.id;
     const jobId = req.params.id;
+
     if (!jobId) {
-      return res
-        .status(400)
-        .json({ message: "Invalid job id", success: false });
+      return res.status(400).json({ message: "Job ID is required.", success: false });
     }
-    // check if the user already has applied for this job
+
+    // Check if the user already applied
     const existingApplication = await Application.findOne({
       job: jobId,
       applicant: userId,
@@ -21,17 +21,21 @@ export const applyJob = async (req, res) => {
         success: false,
       });
     }
-    //check if the job exists or not
+
+    // Check if the job exists
     const job = await Job.findById(jobId);
     if (!job) {
       return res.status(404).json({ message: "Job not found", success: false });
     }
-    // create a new application
 
+    // Create a new application
     const newApplication = await Application.create({
       job: jobId,
       applicant: userId,
     });
+
+    // Ensure job.applications exists before pushing
+    if (!job.applications) job.applications = [];
     job.applications.push(newApplication._id);
     await job.save();
 
@@ -39,8 +43,9 @@ export const applyJob = async (req, res) => {
       .status(201)
       .json({ message: "Application submitted", success: true });
   } catch (error) {
+    // Return specific error message instead of generic "Server error"
     console.error(error);
-    res.status(500).json({ message: "Server error", success: false });
+    return res.status(500).json({ message: error.message, success: false });
   }
 };
 
@@ -121,20 +126,20 @@ export const updateStatus = async (req, res) => {
 
 
 export const withdrawApplication = async (req, res) => {
-    try {
-        const jobId = req.params.id;
-        const userId = req.id;
+  try {
+    const jobId = req.params.id;
+    const userId = req.id;
 
-        // Find and delete the specific application
-        const application = await Application.findOneAndDelete({ job: jobId, applicant: userId });
+    // Find and delete the specific application
+    const application = await Application.findOneAndDelete({ job: jobId, applicant: userId });
 
-        if (!application) {
-            return res.status(404).json({ message: "Application not found.", success: false });
-        }
-
-        return res.status(200).json({ message: "Application withdrawn successfully.", success: true });
-    } catch (error) {
-        console.error("Withdraw Error:", error);
-        return res.status(500).json({ message: "Server error", success: false });
+    if (!application) {
+      return res.status(404).json({ message: "Application not found.", success: false });
     }
+
+    return res.status(200).json({ message: "Application withdrawn successfully.", success: true });
+  } catch (error) {
+    console.error("Withdraw Error:", error);
+    return res.status(500).json({ message: "Server error", success: false });
+  }
 };
